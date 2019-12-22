@@ -2,10 +2,10 @@ import boto3
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-region=['eu-north-1','ap-south-1','eu-west-3','eu-west-2','eu-west-1','ap-northeast-2','ap-northeast-1','sa-east-1','ca-central-1','ap-east-1','ap-southeast-1','ap-southeast-2','eu-central-1','us-east-1','us-east-2','us-west-2','us-west-1']
+region=boto3.client('ec2')
+allreg=[region['RegionName'] for region in region.describe_regions()['Regions']]
 activecount=[]
-for i in region:
+for i in allreg:
         ec2 = boto3.resource('ec2',i)
         print(i)
         instances = ec2.instances.filter(
